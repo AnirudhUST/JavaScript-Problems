@@ -1,0 +1,269 @@
+Q1-->ROMAN TO NUMBER
+ANS-->
+function romanToNumber(romanNumeral) {
+  const romanToNumberMap = new Map([
+    ['I', 1],
+    ['V', 5],
+    ['X', 10],
+    ['L', 50],
+    ['C', 100],
+    ['D', 500],
+    ['M', 1000]
+  ]);
+  let sum=0;
+
+ 
+  for (let i = 0; i < romanNumeral.length; i++) {
+    const currentChar = romanNumeral[i];
+    const next=romanNumeral[i+1];
+    
+    const currentCharValue = romanToNumberMap.get(currentChar);
+    const nextCharValue=romanToNumberMap.get(next);
+    if(next&&nextCharValue>currentCharValue)
+          sum=sum-currentCharValue;
+    else
+          sum=sum+currentCharValue;
+  }
+  return(sum);
+}
+
+console.log(romanToNumber("XIV"));
+OUT-->
+14
+
+Q2-->Find the pairs of a given number
+ANS-->
+function pair(t) {
+  const a = [1,4,6,7,9,10,0];
+
+  
+  let sum=0;
+
+ for(let j=0;j<a.length;j++){
+  for (let i=j+1; i < a.length; i++) {
+      sum=a[j]+a[i];
+      if( sum==t){
+          console.log(a[i]+","+a[j]);}
+      }
+    
+ 
+}}
+
+pair(8);
+
+OUT-->
+7,1
+
+Q3-->Reverse  a string and use Excepetion if not English
+ANS-->
+function pair(t) {
+    const nonEnglishChars = /[^a-zA-Z]/g;
+     if(nonEnglishChars.test(t))
+     {
+         throw new Error("Not english");
+     }
+    let n=t.length;
+    let str="";
+    for(let i=n-1;i>=0;i--){
+        
+        str=str+t[i];
+        
+    }
+     
+     console.log(str) ;
+ 
+}
+try {
+  pair("മലയാളം");
+}
+catch(err) {
+  console.log(err.message) ;
+}
+OUT-->
+Not english
+
+Q4-->validate email and password in a form using html javaScript
+ANS-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Data Form</title>
+  <style>
+    form {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: 0 auto;
+  }
+  
+  label {
+    margin-bottom: 10px;
+  }
+  
+  input,
+  select,
+  textarea {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border: 1px solid #555;
+  }
+  
+  button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #3e8e41;
+  }
+  
+  /* error message styling */
+  
+  .error {
+    color: red;
+    margin-top: 5px;
+  }
+  
+  /* success message styling */
+  
+  .success {
+    color: green;
+    margin-top: 5px;
+  }
+  
+  /* password strength meter styling */
+  
+  #password-strength-meter {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  #password-strength-meter > div {
+    height: 10px;
+    margin-right: 5px;
+    background-color: #DDD;
+  }
+  
+  #password-strength-meter .weak {
+    background-color: #F44336;
+  }
+  
+  #password-strength-meter .medium {
+    background-color: #FFC107;
+  }
+  
+  #password-strength-meter .strong {
+    background-color: #4CAF50;
+  }
+  
+  #password-strength-meter .very-strong {
+    background-color: #2196F3;
+  }
+  
+
+  </style>
+</head>
+<body>
+  <form id="userDataForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" 
+    title="Password must be at least 8 characters long and contain at least one letter and one number." required><br>
+
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="submissionMessage"></div>
+
+  <script>
+    const form = document.getElementById('userDataForm');
+    const submissionMessage = document.getElementById('submissionMessage');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      let isValid = true;
+
+      const nameInput = form.querySelector('#name');
+      const emailInput = form.querySelector('#email');
+      const passwordInput = form.querySelector('#password');
+      const confirmPasswordInput = form.querySelector('#confirmPassword');
+
+      const name = nameInput.value;
+      const email = emailInput.value;
+      const password = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+
+      // Validate name input
+      if (name.trim() === '') {
+        nameInput.setCustomValidity('Name is required');
+        isValid = false;
+      } else {
+        nameInput.setCustomValidity('');
+      }
+
+      // Validate email input
+      if (email.trim() === '') {
+        emailInput.setCustomValidity('Email is required');
+        isValid = false;
+      } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+        emailInput.setCustomValidity('Invalid email format');
+        isValid = false;
+      } else {
+        emailInput.setCustomValidity('');
+      }
+
+      // Validate password input
+      if (password.trim() === '') {
+        passwordInput.setCustomValidity('Password is required');
+        isValid = false;
+      } else if (password !== confirmPassword) {
+        confirmPasswordInput.setCustomValidity('Passwords do not match');
+        isValid = false;
+      } else {
+        confirmPasswordInput.setCustomValidity('');
+        if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
+          passwordInput.setCustomValidity('Password must be at least 8 characters long and contain at least one letter and one number.');
+          isValid = false;
+        } else {
+          passwordInput.setCustomValidity('');
+        }
+      }
+
+      // Submit form if all inputs are valid
+      if (isValid) {
+        submissionMessage.textContent = 'Submitting...';
+        setTimeout(function() {
+          submissionMessage.textContent = 'Submitted!';
+          form.reset();
+        }, 2000);
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+Q4-->
